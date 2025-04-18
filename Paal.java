@@ -11,7 +11,10 @@ public class Paal {
 	
 	private Chipkaart chipkaart;  // Store the shared instance
 	
-	private double rate = 0.02;
+	private double rate = 0.25;
+	private double[] tijden = {15, 30, 28};
+	private int richting;
+	public List<String[]> haltes = new ArrayList<>();
 	
 	LocalTime incheckTime;
 	LocalDate incheckDate;
@@ -45,7 +48,7 @@ public class Paal {
 		}
     }
 	
-	public void checkin(String id) {
+	public void checkin(String id, int locatie) {
 		String[] array = chipkaart.HaalKaart(id);
 		
 		if (array != null) {
@@ -112,5 +115,27 @@ public class Paal {
 				System.out.println("U bent niet ingecheckt.");
 			}
 		}
+	}
+	
+	public boolean checkreistijd(String id) {
+		String[] array = chipkaart.HaalKaart(id);
+		
+		if (array != null) {
+			if (array[3].equalsIgnoreCase("true")) {
+				if (array[1].equalsIgnoreCase(id)) {			
+					LocalTime nowTime = LocalTime.now();
+					LocalDate nowDate = LocalDate.now();
+					
+					long seconds = ChronoUnit.SECONDS.between(incheckTime, nowTime);
+					
+					if (seconds >= (tijden[richting])) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		
+		return false;
 	}
 }

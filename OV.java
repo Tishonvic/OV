@@ -47,27 +47,61 @@ public class OV {
 					}
 				} 
 			} else {
-				System.out.println("1. Saldo Checken"+"\n"+ "2. Opwaarderen"+"\n"+ "3. Inchecken"+"\n"+ "4. Uitchecken"+"\n");
+				String[] array = chipkaart.HaalKaart(ovingebruik);
 				
-				int choice = sc.nextInt();
-				
-				switch (choice) {
-					case 1:
-						paal.saldo(ovingebruik);
-						break;
-					case 2:
-						System.out.println("Hoeveel wilt u opwaarderen? (Schrijf het zo: 0.00)");
-						
-						double cash = sc.nextDouble();
-						
-						paal.opwaarderen(ovingebruik, cash);
-						break;
-					case 3:
-						paal.checkin(ovingebruik);
-						break;
-					case 4:
-						paal.checkuit(ovingebruik);
-						break;
+				if (array != null) {
+					if (array[3].equalsIgnoreCase("false")) {
+						System.out.println("1. Saldo Checken"+"\n"+ "2. Opwaarderen"+"\n"+ "3. Inchecken");
+					} else if (array[3].equalsIgnoreCase("true")) {
+						while (true) {
+							boolean kanuit = paal.checkreistijd(ovingebruik);
+							
+							if (kanuit == false) {
+								System.out.print(".");
+							} else if (kanuit == true) {
+								System.out.println("");
+								System.out.println("4. Uitchecken");
+								break;
+							}
+							
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+					
+					int choice = sc.nextInt();
+					
+					switch (choice) {
+						case 1:
+							paal.saldo(ovingebruik);
+							break;
+						case 2:
+							System.out.println("Hoeveel wilt u opwaarderen? (Schrijf het zo: 0.00)");
+							
+							double cash = sc.nextDouble();
+							
+							paal.opwaarderen(ovingebruik, cash);
+							break;
+						case 3:
+							System.out.println("Huidige locatie: " + array[4]);
+							System.out.println("Waar wilt u heen reizen:"+"\n"+ "1. Heyendaal"+"\n"+ "2. Venlo"+"\n"+ "3. Arnhem");
+							
+							int choice1 = sc.nextInt();
+							
+							paal.checkin(ovingebruik, (choice1 - 1));
+							
+							break;
+						case 4:
+							
+							
+							
+							paal.checkuit(ovingebruik);
+							
+							break;
+					}
 				}
 			}
 		}
