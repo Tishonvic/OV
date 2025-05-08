@@ -7,7 +7,7 @@ public class Chipkaart {
     
     public void NieuwKaart(String type) {
     	String id = "ov" + (kaarten.size() + 1);
-        String[] nieuweKaart = new String[] {"0.00", id, type, "false", "Venlo"};
+        String[] nieuweKaart = new String[] {"0.00", id, type, "false", "Nijmegen"};
         
         kaarten.add(nieuweKaart);
     }
