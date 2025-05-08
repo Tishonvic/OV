@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
 import java.util.*;
 
-import oop1.SavingsAccount;
-
 public class OV {
 	static Scanner sc = new Scanner(System.in);
 	
@@ -72,9 +70,9 @@ public class OV {
 						}
 					}
 					
-					int choice = sc.nextInt();
+					int keuze = sc.nextInt();
 					
-					switch (choice) {
+					switch (keuze) {
 						case 1:
 							paal.saldo(ovingebruik);
 							break;
@@ -87,7 +85,20 @@ public class OV {
 							break;
 						case 3:
 							System.out.println("Huidige locatie: " + array[4]);
-							System.out.println("Waar wilt u heen reizen:"+"\n"+ "1. Heyendaal"+"\n"+ "2. Venlo"+"\n"+ "3. Arnhem");
+							System.out.println("Waar wilt u heen reizen:");
+							
+							int index = 0;
+							
+							for (int i = 0; i < paal.haltes.length; i++) {
+								boolean isnieuw = paal.haltes[i].equalsIgnoreCase(array[4]);
+								
+								if (isnieuw == false) {
+									index++;
+									System.out.println(index+". "+paal.haltes[i]);
+								}
+							}
+							
+//							System.out.println("Waar wilt u heen reizen:"+"\n"+ "1. Heyendaal"+"\n"+ "2. Venlo"+"\n"+ "3. Arnhem");
 							
 							int choice1 = sc.nextInt();
 							

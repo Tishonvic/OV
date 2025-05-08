@@ -10,11 +10,11 @@ public class Paal {
 	static Scanner sc = new Scanner(System.in);
 	
 	private Chipkaart chipkaart;  // Store the shared instance
-	
 	private double rate = 0.25;
 	private double[] tijden = {15, 30, 28};
 	private int richting;
-	public List<String[]> haltes = new ArrayList<>();
+	
+	public String[] haltes = {"Nijmegen", "Heyendaal", "Venlo", "Arnhem"};
 	
 	LocalTime incheckTime;
 	LocalDate incheckDate;
@@ -66,7 +66,7 @@ public class Paal {
 					    DateTimeFormatter DateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 					    String formattedDate = incheckDate.format(DateFormat);
 						
-						System.out.println("Ingechecked: " + formattedDate + " " + formattedTime);
+						System.out.println("Ingecheckt: " + formattedDate + " " + formattedTime);
 						
 						array[3] = "true";
 					} else if (saldo <= 0) {
@@ -97,18 +97,23 @@ public class Paal {
 					    DateTimeFormatter DateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 					    String formattedDateUit = incheckDate.format(DateFormat);
 					    
-					    long seconds = ChronoUnit.SECONDS.between(incheckTime, uitcheckTime);  
+					    long seconds = ChronoUnit.SECONDS.between(incheckTime, uitcheckTime);
 					    
-					    System.out.println(seconds);
-					    
-						saldo -= (seconds*rate);
+						if (array[2].equalsIgnoreCase("Student")) {
+							saldo -= ((seconds*rate)*0.4);	
+						} else {
+							saldo -= (seconds*rate);
+						}
 						
 						array[0] = String.valueOf(saldo);
 						
 						System.out.println("U nieuwe saldo is: $" + array[0] + "\n" + "$" + (seconds*rate) + " is af u saldo gehaald.");
-						System.out.println("Uitgecheck: " + formattedDateUit + " " + formattedTimeUit);
+						System.out.println("Uitgecheckt: " + formattedDateUit + " " + formattedTimeUit);
 						
 						array[3] = "false";
+						array[4] = haltes[richting];
+						
+						System.out.println("Huidige locatie: " + array[4]);
 					}
 				}
 			} else {
